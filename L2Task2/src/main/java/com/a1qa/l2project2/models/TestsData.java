@@ -8,13 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class TestsData {
-    String urlposts;
-    String urlposts99;
-    String urlposts150;
-    String urlusers;
-    String urlusers5;
+    String urlPosts;
+    String urlUsers;
     String body;
     Integer numberUser;
+    Integer numberOfUsers;
+    Integer incorrectUser;
     Integer code200;
     Integer code201;
     Integer code404;

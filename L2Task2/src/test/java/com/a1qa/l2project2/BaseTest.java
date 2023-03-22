@@ -15,7 +15,11 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDown() throws IOException {
-        Unirest.shutdown();
+    public void tearDown() {
+        try {
+            Unirest.shutdown();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

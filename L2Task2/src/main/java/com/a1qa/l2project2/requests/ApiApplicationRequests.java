@@ -11,68 +11,57 @@ import java.util.List;
 
 public class ApiApplicationRequests {
 
-    public static void getAllPosts() {
-        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts());
-        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts()).getStatus(),
+    public static List<Post> getAllPosts() {
+        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlPosts());
+        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlPosts()).getStatus(),
                 JsonHelper.getTestsData().getCode200(), "Status code is not expected");
+        String responseJsonString = ApiUtils.getRequest(JsonHelper.getTestsData().getUrlPosts()).getBody().toString();
+        return JsonHelper.toJavaList(responseJsonString);
     }
 
-    public static boolean checkPostSorting() {
-        String responseJsonString = ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts()).getBody().toString();
-        List<Post> posts = JsonHelper.toJavaList(responseJsonString);
-        for (int i = 0; i < posts.size() - 1; i++) {
-            if (posts.get(i).getId() < posts.get(i + 1).getId()) {
-                continue;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static Post checkUser() {
-        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts99());
-        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts99()).getStatus(),
+    public static Post getPost(int numberOfUser) {
+        ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlPosts() + "/%s", numberOfUser));
+        Assert.assertEquals(ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlPosts() + "/%s", numberOfUser)).getStatus(),
                 JsonHelper.getTestsData().getCode200(), "Status code is not expected");
-        return JsonHelper.toPost(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts99()).getBody().toString());
+        return JsonHelper.toPost(ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlPosts() + "/%s", numberOfUser)).getBody().toString());
     }
 
-    public static JsonNode getUserWithIncorrectId() {
-        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts150());
-        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts150()).getStatus(),
+    public static JsonNode getUserWithIncorrectId(int numberOfUser) {
+        ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlPosts() + "/%s", numberOfUser));
+        Assert.assertEquals(ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlPosts() + "/%s", numberOfUser)).getStatus(),
                 JsonHelper.getTestsData().getCode404(), "Status code is not expected");
-        return ApiUtils.getRequest(JsonHelper.getTestsData().getUrlposts150()).getBody();
+        return ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlPosts() + "/%s", numberOfUser)).getBody();
     }
 
     public static String postUser() {
-        ApiUtils.postRequest(JsonHelper.getTestsData().getUrlposts()).body(Post.toJsonString());
+        ApiUtils.postRequest(JsonHelper.getTestsData().getUrlPosts()).body(Post.toJsonString());
         try {
-            Assert.assertEquals(ApiUtils.postRequest(JsonHelper.getTestsData().getUrlposts()).body(Post.toJsonString()).asJson().getStatus(),
+            Assert.assertEquals(ApiUtils.postRequest(JsonHelper.getTestsData().getUrlPosts()).body(Post.toJsonString()).asJson().getStatus(),
                     JsonHelper.getTestsData().getCode201(), "Status code is not expected");
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         }
         try {
-            return ApiUtils.postRequest(JsonHelper.getTestsData().getUrlposts()).body(Post.toJsonString()).asJson().getBody().toString();
+            return ApiUtils.postRequest(JsonHelper.getTestsData().getUrlPosts()).body(Post.toJsonString()).asJson().getBody().toString();
         } catch (UnirestException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static List<User> getUsers() {
-        String responseJsonString = ApiUtils.getRequest(JsonHelper.getTestsData().getUrlusers()).getBody().toString();
+        String responseJsonString = ApiUtils.getRequest(JsonHelper.getTestsData().getUrlUsers()).getBody().toString();
         List<User> users = JsonHelper.toJavaListUser(responseJsonString);
-        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlusers());
-        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlusers()).getStatus(),
+        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlUsers());
+        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlUsers()).getStatus(),
                 JsonHelper.getTestsData().getCode200(), "Status code is not expected");
         return users;
     }
 
-    public static User getFifthUser() {
-        String responseJsonString = ApiUtils.getRequest(JsonHelper.getTestsData().getUrlusers5()).getBody().toString();
+    public static User getUser(int numberOfUser) {
+        String responseJsonString = ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlUsers() + "/%s", numberOfUser)).getBody().toString();
         User user = JsonHelper.toJavaUser(responseJsonString);
-        ApiUtils.getRequest(JsonHelper.getTestsData().getUrlusers5());
-        Assert.assertEquals(ApiUtils.getRequest(JsonHelper.getTestsData().getUrlusers5()).getStatus(),
+        ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlUsers() + "/%s", numberOfUser));
+        Assert.assertEquals(ApiUtils.getRequest(String.format(JsonHelper.getTestsData().getUrlUsers() + "/%s", numberOfUser)).getStatus(),
                 JsonHelper.getTestsData().getCode200(), "Status code is not expected");
         return user;
     }
