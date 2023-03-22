@@ -1,4 +1,16 @@
 {
-  "url": "https://jsonplaceholder.typicode.com",
-  "body": "{}"
+  "urlposts": "https://jsonplaceholder.typicode.com/posts",
+  "urlposts99": "https://jsonplaceholder.typicode.com/posts/99",
+  "urlposts150": "https://jsonplaceholder.typicode.com/posts/150",
+  "urlusers": "https://jsonplaceholder.typicode.com/users",
+  "urlusers5": "https://jsonplaceholder.typicode.com/users/5",
+  "body": "{}",
+  "numberUser": "5",
+  "code200": "200",
+  "code201": "201",
+  "code404": "404",
+  "userId": "10",
+  "id": "99",
+  "length": "0",
+  "postUserId": "1"
 }
