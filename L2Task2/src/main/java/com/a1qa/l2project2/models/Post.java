@@ -16,7 +16,7 @@ public class Post {
     private Integer id;
     private String title;
     private String body;
-    @JsonIgnoreProperties(ignoreUnknown = true)
+
     public static String toJsonString() {
         com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
         Post post = new Post(JsonHelper.getTestsData().getPostUserId(), builder().id, RandomString.getTitle().toString(), RandomString.getBody().toString());
